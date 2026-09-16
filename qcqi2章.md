@@ -371,6 +371,83 @@ $$\langle M \rangle = E(M) = \langle\psi\vert{} M \vert{}\psi\rangle$$
 3. 物理特质:
    正交投影测量保证了“重复测量的一致性”；结合算子非对易性即可推导出海森堡不确定性原理。
 
+2.2.6 POVM 测量（Positive Operator-Valued Measure，正算子值测度）
+1. 为什么需要 POVM？（核心动机）
+测量结果出现的概率（统计规律）”，而不在乎“测完之后量子态毁成什么样”时，如何把数学工具简化到极致？
+广义测量公设（公设 3）中，测量包含两部分：
+算概率：测得结果 $m$ 的概率是 $p(m) = \langle\psi\vert{} M_m^\dagger M_m \vert{}\psi\rangle$。
+算塌缩：测完后态变成 $\vert{}\psi'\rangle = \frac{M_m \vert{}\psi\rangle}{\sqrt{p(m)}}$。
+物理学家干脆把两项打包：令 $E_m \equiv M_m^\dagger M_m$。
+这个半正定算子 $E_m$ 就叫做 POVM 元素，整个集合 $\{E_m\}$ 叫做一个 POVM。
+2. POVM 的数学规则（极其简洁）
+半正定性：每个 $E_m$ 都是半正定矩阵（保证概率 $p(m) \ge 0$）。
+完备性关系：所有元素加起来等于单位矩阵，即 $\sum_m E_m = I$（保证概率之和为 100%）。
 
+专题 2.5 中对这三种测量进行了全景对比：
+公设 3: 广义测量 {M_m}(包含概率计算 p(m) 与测后塌缩态 |ψ'⟩)
+【特例 1: 投影测量 P_m】
+- P_m^† = P_m = P_m^2
+- 几何垂直投影, 可重复测量
+- 算子数 = 空间维度
+【特例 2: POVM 测量 E_m】
+- E_m = M_m^† M_m
+- 只保留概率计算 p(m)=⟨ψ|E_m|ψ⟩
+- 算子数可大于空间维度
+- 适合光子探测/无错态区分
 
-   
+测量类型,   在数学上可以视为什么样的矩阵？,  关键几何/代数特征,      核心用途
+广义测量,   一堆普通的算子矩阵 {Mm​},        ∑Mm†​Mm​=I,             最一般的数学描述（包含了旋转和缩放）
+投影测量,   一堆互相垂直的投影矩阵 {Pm​},    Pm†​=Pm​=Pm2​，且 Pm​Pn​=0, 物理可观测量（测自旋、能量等），可重复测量
+POVM 测量,  一堆半正定的概率权重矩阵 {Em​},  Em​≥0 且 ∑Em​=I,        光子探测、无错区分非正交态（只关心概率）
+
+2.2.7 相位
+1. 全局相位（Global Phase）$\implies$ 没有物理意义，可直接忽略概念与定义
+$$e^{i\theta}\vert{}\psi\rangle \equiv \vert{}\psi\rangle$$
+算测量概率：$$p(m) = \langle\psi'\vert{} M_m^\dagger M_m \vert{}\psi'\rangle = \big(\langle\psi\vert{} e^{-i\theta}\big) M_m^\dagger M_m \big(e^{i\theta} \vert{}\psi\rangle\big) = e^{-i\theta} e^{i\theta} \langle\psi\vert{} M_m^\dagger M_m \vert{}\psi\rangle = \mathbf{\langle\psi\vert{} M_m^\dagger M_m \vert{}\psi\rangle}$$
+算期望值：$$\langle M \rangle = \langle\psi'\vert{} M \vert{}\psi'\rangle = e^{-i\theta} e^{i\theta} \langle\psi\vert{} M \vert{}\psi\rangle = \mathbf{\langle\psi\vert{} M \vert{}\psi\rangle}$$
+2. 相对相位（Relative Phase）$\implies$ 具有关键物理意义，绝对不能忽略概念与定义
+相位因子只乘在叠加态中的某一个分量上（比如只给 $\vert{}1\rangle$ 项加相位）：
+$$\vert{}\psi\rangle = a\vert{}0\rangle + b e^{i\theta} \vert{}1\rangle$$
+$$\vert{}\psi\rangle = \cos\frac{\theta}{2}\vert{}0\rangle + e^{i\phi}\sin\frac{\theta}{2}\vert{}1\rangle$$
+总结方法：
+求任意叠加态 $a\vert{}0\rangle + b\vert{}1\rangle$ 的相对相位：
+1 先提取 $a$ 使 $\vert{}0\rangle$ 系数化为实数（消除全局相位）：$a\vert{}0\rangle + b\vert{}1\rangle = \vert{}a\vert{}\cdot e^{i\theta_a} \left(\vert{}0\rangle + \frac{b}{a}\vert{}1\rangle\right)$；
+2 直接观察或计算 $\frac{b}{a}$ 的辐角 $\arg\left(\frac{b}{a}\right)$；
+3 对于 $\frac{\vert{}0\rangle + \vert{}1\rangle}{\sqrt{2}}$，由于 $\frac{1/\sqrt{2}}{1/\sqrt{2}} = 1$，其相对相位角即为 $\arg(1) = \mathbf{0}$。
+
+2.2.8 复合系统（Composite Systems）
+量子力学的四大公设之一（公设 4）。它回答了一个根本问题：当我们把两个或多个独立的量子系统（如多个量子比特）组合在一起时，整个大系统的数学空间该怎么构建？
+一、 核心公设（公设 4）
+张量积构成空间：复合系统的状态空间由各个子系统的状态空间做张量积（Tensor Product, $\otimes$） 组合而成。
+直积态：如果系统 1 到 $n$ 分别处于状态 $\vert{}\psi_1\rangle, \vert{}\psi_2\rangle, \dots, \vert{}\psi_n\rangle$，则联合状态写为：$$\vert{}\psi\rangle = \vert{}\psi_1\rangle \otimes \vert{}\psi_2\rangle \otimes \dots \otimes \vert{}\psi_n\rangle \quad (\text{简写为 } \vert{}\psi_1\rangle\vert{}\psi_2\rangle \text{ 或 } \vert{}\psi_1 \psi_2 \dots \psi_n\rangle)$$
+
+二、 两个核心推论与物理后果
+量子纠缠的引入（Entanglement）
+可分离态（直积态）：能够写成 $\vert{}\psi\rangle = \vert{}a\rangle \otimes \vert{}b\rangle$ 的复合态。
+纠缠态（Entangled State）：无法写成任何子系统单态直积形式的复合态。
+经典例子（Bell 态，式 2.132）：$$\vert{}\psi\rangle = \frac{\vert{}00\rangle + \vert{}11\rangle}{\sqrt{2}}$$
+数学上无法拆成 $\vert{}a\rangle\vert{}b\rangle$，说明两个子系统之间产生了非局域的强关联）
+
+三、 符号规范（文献常用习惯）
+下标表示作用对象：如 $X_2$ 或 $X \otimes I$ 表示将 Pauli-X 门作用在第 2 个量子比特上，其余比特保持不变。
+联合测量：$X_1 Z_2 \equiv X \otimes Z$ 表示对第一个比特测 $X$，同时对第二个比特测 $Z$。
+
+2.2.9 量子力学：总览
+一、 四大基本公设终极串联（量子力学四柱）
+公设 1（状态空间 State Space）：指定如何描述孤立系统。系统由希尔伯特空间中的单位复向量（状态向量 $\vert{}\psi\rangle$）来完全设定。
+公设 2（动态演化 Evolution）：指定状态如何随时间改变。封闭系统的演化由薛定谔方程 / 酉算子 $U$（Unitary Transformation）描述。
+公设 3（量子测量 Measurement）：指定如何从量子系统中提取信息。测量由测量算子 $\{M_m\}$ 描述，不仅给出概率 $p(m)$，还会引发不可逆的状态塌缩。
+公设 4（复合系统 Composite Systems）：指定如何组合多个系统。复合状态空间由子空间的张量积（Tensor Product $\otimes$）构成，由此孕育了量子纠缠（Entanglement）。
+二、 量子世界 vs 经典世界的三个反直觉特质
+1 不可直接观察性（隐藏的状态向量）
+2 测量的破坏性（Measurement as a Destructive Process）
+3 反直觉特性的价值（资源而非缺陷）
+
+2.3 应用：超密编码
+初始状态：$\vert{}\psi\rangle = \frac{\vert{}00\rangle + \vert{}11\rangle}{\sqrt{2}}$
+Alice 的动作 (单比特)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大系统的联合状态 (双比特)
+------------------                 ----------------------
+不做事 (I)      ───────►  |β_00⟩ = (|00⟩ + |11⟩) / √2   (代表 00)
+改相位 (Z)      ───────►  |β_01⟩ = (|00⟩ - |11⟩) / √2   (代表 01)
+换比特 (X)      ───────►  |β_10⟩ = (|10⟩ + |01⟩) / √2   (代表 10)
+既换又改 (XZ)   ───────►  |β_11⟩ = (|01⟩ - |10⟩) / √2   (代表 11)
